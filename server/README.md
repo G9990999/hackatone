@@ -4,13 +4,35 @@ import requests
 
 url = 'http://62.113.108.20:8081'
 
+## Get user profile
+
+```sh
 print(requests.get(url+'/profile?point=Vanessa Lynn').json())
+```
+
+## Get user role
+
+```sh
 print(requests.get(url+'/get_role?point=Vanessa Lynn').json())
+```
+## Get user stach
+
+```sh
 print(requests.get(url+'/get_stash?point=Vanessa Lynn').json())
+```
 
-#print(requests.get(url+'/upload_nft?point=Vanessa Lynn&nft=rasfsasdopiqwer').json())
+## Addd nft
 
+```sh
+print(requests.get(url+'/upload_nft?point=Vanessa Lynn&nft=rasfsasdopiqwer').json())
+```
+
+## Get nfts
+
+```sh
 print(requests.get(url+'/get_nft?point=Vanessa Lynn').json())
+```
+
 
 
 
