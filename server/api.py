@@ -9,9 +9,9 @@ import urllib.parse
 from pymongo import MongoClient
 
 username = urllib.parse.quote_plus("admin")             # Логин админстратора
-password = urllib.parse.quote_plus("3gaSc&Bi")          # Пароль администратора
+password = urllib.parse.quote_plus("wmG3g1!C")          # Пароль администратора
 
-host = "gekukugep.beget.app"  # Адрес сервера / доменное имя
+host = "edrashtegool.beget.app"  # Адрес сервера / доменное имя
 
 client = MongoClient(f"mongodb://{username}:{password}@{host}")
 db = client['test']
@@ -114,7 +114,11 @@ def endp4() -> Response:
             print(res)
 
         myquery = {"name": {"$eq": res['point']}}
-        res = db['sym_eqt_tam'].update_one(myquery,{'$set':{'nft':res['nft']}})
+
+        re = list(db['sym_eqt_tam'].find(myquery,{'_id':0}))[0]['nft']
+
+
+        res = db['sym_eqt_tam'].update_one(myquery,{'$set':{'nft':[res['nft']]+re}})
 
         ds ={'status':'ok'}
 
@@ -122,6 +126,30 @@ def endp4() -> Response:
 
     except KeyError:
         raise RuntimeError('"X" cannot be be found in JSON payload.')
+
+
+@app.route('/get_nft', methods=['GET','POST'])
+def endp5() -> Response:
+
+    try:
+        if request.method == 'POST':
+            res = request.json['point']
+        else :
+            res = request.args['point']
+
+            res = [i for i in res.split(',')][0]
+
+        print(res)
+
+        myquery = {"name": {"$eq": res}}
+        res = list(db['sym_eqt_tam'].find(myquery,{'_id':0}))[0]['nft']
+        ds ={'status':'ok', 'results':res}
+
+        return make_response(jsonify(ds))
+
+    except KeyError:
+        raise RuntimeError('"X" cannot be be found in JSON payload.')
+
 
 
 if __name__ == '__main__':
